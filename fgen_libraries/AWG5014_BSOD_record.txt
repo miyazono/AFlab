@@ -1,0 +1,64 @@
+20160301
+KERNEL_STACK_INPAGE_ERROR
+technical information stop: 0x00000077 (0xC000000E,0xC000000E,0x00000000,0x0BE7E000)
+
+support suggestions:
+https://support.microsoft.com/en-us/kb/315266
+https://support.microsoft.com/en-us/kb/228753
+
+holding f8 allows you to boot in safe mode
+
+20160328
+technical information stop: 0x00000077 (0xC000000E,0xC000000E,0x00000000,0x01E58000)
+
+20160502
+forgot to write them down
+
+20160506
+technical information stop: 0x00000077 (0xC000000E,0xC000000E,0x00000000,0x01E7DE000)
+
+20160519
+forgot to write them down
+
+20160819
+technical information stop: 0x00000077 (0xC000000E,0xC000000E,0x00000000,0x42138000)
+
+20160920
+technical information stop: 0x00000077 (0xC000000E,0xC000000E,0x00000000,0x00F78000)
+
+20160930
+technical information stop: 0x0000007A (0xC09C20F8,0xC000000E,0xF841F642,0x1A7B3860)
+
+20161006
+technical information stop: 0x00000077 (0xC000000E,0xC000000E,0x00000000,0x1FE0A000)
+
+20161014
+technical information stop: 0x0000007A (0xC07C20F8,0xC000000E,0xF841F642,0x1D042860)
+
+20161015
+technical information stop: 0x0000007A (0xC07C1F40,0xC000000E,0xF83E8302,0x1ADF3860)
+on reboot
+STOP: c0000218 Unknown Hard Error
+Unknown Hard Error
+rebooted, and it didn't make it though the self diagnostic check before it died again.  I repeated this a number of times trying to ctrl-alt-del the awg software, and finally was able to kill it before it could crash the system.
+I removed a bunch of things from the open-on-startup list, so it's running a little faster now at least.  I'm currently running a disk check/repair and hoping it's a bad checksum, pointer, sector or something fixable.
+
+20161015
+technical information stop: 0x0000007A (0xC07C1F40,0xC000000E,0xF83E8302,0x114C5860)
+tried cleaning up the registry using CCleaner (saved a backup in my documents)
+found and fixed 50 assorted errors, and then spontaneously decided to start the AWG interface software, and it booted up
+It seemed like the front panel buttons weren't working so I added the various programs back to open-on-startup and tried running the awgPanelCtrl, but it said it was already running, and then the buttons started working
+
+20161017
+BSOD again, no idea how long it was up for
+technical information stop: 0x00000077 (0xC000000E,0xC000000E,0x00000000,0x00314000)
+tried booting from cd, didn't even finish booting
+video driver failed to initialize
+technical information stop: 0x000000B4 (0x82D496F0,0x82D9A000,0x71E98000,0x00050000)
+
+because the four variables in the information stop are 
+(Status code, I/O status code, Page file number, Offset into page file)
+and 0xC000000E = STATUS_NO_SUCH_DEVICE: the drive went unavailable, possibly a bad hard drive, disk array, and/or controller card.
+I ran the hard drive scan again, which seems to run fine, so I doubt it's a HDD  problem
+
+

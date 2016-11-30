@@ -1,0 +1,4297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MATLABInstrumentDriver>
+   <FileVersion>2.42</FileVersion>
+   <DriverName>TekFgen.TekFgen</DriverName>
+   <DriverType>MATLAB IVI-COM</DriverType>
+   <InstrumentType>Function Generator</InstrumentType>
+   <InstrumentManufacturer>Tektronix</InstrumentManufacturer>
+   <InstrumentModel>AWG 5000 and 7000 Series</InstrumentModel>
+   <InstrumentVersion>1.0</InstrumentVersion>
+   <Identify>*IDN?</Identify>
+   <Reset>*RST</Reset>
+   <Selftest>*TST?</Selftest>
+   <Error>System:Error?</Error>
+   <CreateInitCode>
+      <Code>function init(obj)
+% This function is called after the object is created.
+% OBJ is the device object.
+% End of function definition - DO NOT EDIT</Code>
+   </CreateInitCode>
+   <ConnectInitCode>
+      <Type>MCode</Type>
+      <Code>function init(obj)
+% This function is called after the object is connected.
+% OBJ is the device object.
+% End of function definition - DO NOT EDIT</Code>
+   </ConnectInitCode>
+   <CleanupCode>
+      <Type>MCode</Type>
+      <Code>function cleanup(obj)
+% This function is called before the object is disconnected.
+% OBJ is the device object.
+% End of function definition - DO NOT EDIT
+</Code>
+   </CleanupCode>
+   <GroupInfo>
+      <Group>
+         <Name>parent</Name>
+         <Description/>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="parent1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>Initialized</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Interface');
+	propertyValue = get(comobj, 'Initialized');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Boolean</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>off</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>Initialized is True between a successful call to the Initialize method and a successful call to the Close method, and False at all other times.</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo>
+            <Method>
+               <Name>Close</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function Close(obj)
+
+comobj = get(obj, 'Interface');
+invoke(comobj, 'Close');
+</MCode>
+               </Code>
+               <Description>Closes the I/O session to the instrument.  Driver methods and properties that access the instrument are not accessible after Close is called.</Description>
+            </Method>
+            <Method>
+               <Name>Initialize</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function Initialize(obj, ResourceName, IdQuery, Reset, OptionString)
+
+comobj = get(obj, 'Interface');
+invoke(comobj, 'Initialize', ResourceName, IdQuery, Reset, OptionString);
+</MCode>
+               </Code>
+               <Description>Opens the I/O session to the instrument.  Driver methods and properties that access the instrument are only accessible after Initialize is called.  Initialize optionally performs a Reset and queries the instrument to validate the instrument model.</Description>
+            </Method>
+         </MethodInfo>
+      </Group>
+      <Group>
+         <Name>arbseq</Name>
+         <Description>This interface is used to create and modify sequences for AWG7000</Description>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="ArbSeq1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>ArbSeqType</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'ArbSeq');
+	propertyValue = get(comobj, 'Type');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenSequencerTypeSoftware" Value="TekFgenSequencerTypeSoftware"/>
+                     <Enum Name="TekFgenSequencerTypeHardware" Value="TekFgenSequencerTypeHardware"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenSequencerTypeSoftware</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>Returns the type of the sequencer.</Description>
+            </Property>
+            <Property>
+               <Name>CurrentPosition</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'ArbSeq');
+	propertyValue = get(comobj, 'CurrentPosition');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>Returns the index of the currently executing element within the sequence.</Description>
+            </Property>
+            <Property>
+               <Name>Length</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'ArbSeq');
+	propertyValue = get(comobj, 'Length');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'ArbSeq');
+	set(comobj, 'Length', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or returns the current length of the sequence.  Length is in terms of the number of elements.</Description>
+            </Property>
+            <Property>
+               <Name>LengthMax</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'ArbSeq');
+	propertyValue = get(comobj, 'LengthMax');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>Returns the maximum allowed length of a sequence</Description>
+            </Property>
+            <Property>
+               <Name>LengthMin</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'ArbSeq');
+	propertyValue = get(comobj, 'LengthMin');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>Returns the minimum length of the sequence.</Description>
+            </Property>
+            <Property>
+               <Name>LoopCountMax</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'ArbSeq');
+	propertyValue = get(comobj, 'LoopCountMax');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>Returns the maximum finite loop count that can be assigned to a sequence element.</Description>
+            </Property>
+            <Property>
+               <Name>NumberSequencesMax</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'ArbSeq');
+	propertyValue = get(comobj, 'NumberSequencesMax');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>Returns the maximum number of sequences that the function generator allows.</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo>
+            <Method>
+               <Name>Clear</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function Clear(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbSeq');
+invoke(comobj, 'Clear');
+</MCode>
+               </Code>
+               <Description>Clears the sequence of all elements.</Description>
+            </Method>
+            <Method>
+               <Name>GotoIndex</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = GotoIndex(obj, IndexNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbSeq');
+[val] = invoke(comobj, 'GotoIndex', int32(IndexNumber));
+</MCode>
+               </Code>
+               <Description>Sets or gets the Goto Index for a sequence jump</Description>
+            </Method>
+            <Method>
+               <Name>GotoState</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = GotoState(obj, IndexNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbSeq');
+[val] = invoke(comobj, 'GotoState', int32(IndexNumber));
+</MCode>
+               </Code>
+               <Description>Enables or disables the GoTo state for a sequence element.</Description>
+            </Method>
+            <Method>
+               <Name>InfiniteLoop</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = InfiniteLoop(obj, IndexNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbSeq');
+[val] = invoke(comobj, 'InfiniteLoop', int32(IndexNumber));
+</MCode>
+               </Code>
+               <Description>Sets or queries whether the infinite looping flag is set on an element</Description>
+            </Method>
+            <Method>
+               <Name>Jump</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function Jump(obj, IndexNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbSeq');
+invoke(comobj, 'Jump', int32(IndexNumber));
+</MCode>
+               </Code>
+               <Description>Executes a sequence jump</Description>
+            </Method>
+            <Method>
+               <Name>JumpTargetIndex</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = JumpTargetIndex(obj, IndexNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbSeq');
+[val] = invoke(comobj, 'JumpTargetIndex', int32(IndexNumber));
+</MCode>
+               </Code>
+               <Description>Sets or queries the index of the sequence jump target</Description>
+            </Method>
+            <Method>
+               <Name>JumpTargetType</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = JumpTargetType(obj, IndexNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbSeq');
+[val] = invoke(comobj, 'JumpTargetType', int32(IndexNumber));
+</MCode>
+               </Code>
+               <Description>Sets or returns the jump targe type for the sequence jump.</Description>
+            </Method>
+            <Method>
+               <Name>LoopCount</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = LoopCount(obj, IndexNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbSeq');
+[val] = invoke(comobj, 'LoopCount', int32(IndexNumber));
+</MCode>
+               </Code>
+               <Description>Sets or queries the loop count for a sequence element.</Description>
+            </Method>
+            <Method>
+               <Name>WaitTriggerState</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = WaitTriggerState(obj, IndexNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbSeq');
+[val] = invoke(comobj, 'WaitTriggerState', int32(IndexNumber));
+</MCode>
+               </Code>
+               <Description>Sets or gets the wait trigger state for an element</Description>
+            </Method>
+            <Method>
+               <Name>Waveform</Name>
+               <Location>arbseq</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = Waveform(obj, IndexNumber, ChannelNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbSeq');
+[val] = invoke(comobj, 'Waveform', int32(IndexNumber), ChannelNumber);
+</MCode>
+               </Code>
+               <Description/>
+            </Method>
+         </MethodInfo>
+      </Group>
+      <Group>
+         <Name>arbwfm</Name>
+         <Description>Interface for creating and transferring waveforms</Description>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="ArbWfm1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>ListSize</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'ArbWfm');
+	propertyValue = get(comobj, 'ListSize');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>Returns the number of waveforms in the waveform list.</Description>
+            </Property>
+            <Property>
+               <Name>Quantum</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'ArbWfm');
+	propertyValue = get(comobj, 'Quantum');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>Returns the quantum of waveform size.</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo>
+            <Method>
+               <Name>Create</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function Create(obj, WaveformName, WaveformType, Size)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+invoke(comobj, 'Create', WaveformName, WaveformType, int32(Size));
+</MCode>
+               </Code>
+               <Description>Creates an empty waveform.</Description>
+            </Method>
+            <Method>
+               <Name>DataType</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = DataType(obj, WaveformName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+[val] = invoke(comobj, 'DataType', WaveformName);
+</MCode>
+               </Code>
+               <Description>Returns the type of the waveform.</Description>
+            </Method>
+            <Method>
+               <Name>Delete</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function Delete(obj, WaveformName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+invoke(comobj, 'Delete', WaveformName);
+</MCode>
+               </Code>
+               <Description>Deletes a waveform from the instrument.</Description>
+            </Method>
+            <Method>
+               <Name>GetMarker</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [Marker1, Marker2] = GetMarker(obj, WaveformName, StartIndex, Size, varargin)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+[Marker1, Marker2] = invoke(comobj, 'GetMarker', WaveformName, [0;0], [0;0], int32(StartIndex), int32(Size));
+</MCode>
+               </Code>
+               <Description>Use this function to read only marker data.</Description>
+            </Method>
+            <Method>
+               <Name>GetPartWaveformInteger</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [DataBuf] = GetPartWaveformInteger(obj, WaveformName, StartIndex, Size, DACResolution, varargin)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+[DataBuf] = invoke(comobj, 'GetPartWaveformInteger', WaveformName, [0;0], int32(StartIndex), int32(Size), DACResolution);
+</MCode>
+               </Code>
+               <Description>This function transfers part of an interger type waveform from the instrument to an external controller (PC).</Description>
+            </Method>
+            <Method>
+               <Name>GetPartWaveformReal</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [DataBuf] = GetPartWaveformReal(obj, WaveformName, StartIndex, Size, varargin)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+[DataBuf] = invoke(comobj, 'GetPartWaveformReal', WaveformName, [0;0], int32(StartIndex), int32(Size));
+</MCode>
+               </Code>
+               <Description>This function transfers part of a real type waveform from the instrument to an external controller (PC).</Description>
+            </Method>
+            <Method>
+               <Name>GetWaveformInteger</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [DataBuf] = GetWaveformInteger(obj, WaveformName, DACResolution, varargin)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+[DataBuf] = invoke(comobj, 'GetWaveformInteger', WaveformName, [0;0], DACResolution);
+</MCode>
+               </Code>
+               <Description>Transfers an interger waveform from an instrument to an external controller (PC)</Description>
+            </Method>
+            <Method>
+               <Name>GetWaveformName</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = GetWaveformName(obj, Index)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+[val] = invoke(comobj, 'GetWaveformName', int32(Index));
+</MCode>
+               </Code>
+               <Description>Returns the waveform name.</Description>
+            </Method>
+            <Method>
+               <Name>GetWaveformReal</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [DataBuf] = GetWaveformReal(obj, WaveformName, varargin)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+[DataBuf] = invoke(comobj, 'GetWaveformReal', WaveformName, [0;0]);
+</MCode>
+               </Code>
+               <Description>Transfers a real type waveform from AWG70000 to an external controller (PC).</Description>
+            </Method>
+            <Method>
+               <Name>Length</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = Length(obj, WaveformName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+[val] = invoke(comobj, 'Length', WaveformName);
+</MCode>
+               </Code>
+               <Description>Returns the length (number of points) of the waveform</Description>
+            </Method>
+            <Method>
+               <Name>Predefined</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = Predefined(obj, WaveformName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+[val] = invoke(comobj, 'Predefined', WaveformName);
+</MCode>
+               </Code>
+               <Description>Returns whether the waveform is predefined.</Description>
+            </Method>
+            <Method>
+               <Name>SendMarker</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function SendMarker(obj, WaveformName, Marker1, Marker2, StartIndex, Size)
+
+mn = size(Marker1);
+mn = size(Marker2);
+
+% Make sure data is in a column vector
+if mn(1) == 1
+    Marker1 = Marker1';
+end
+
+if mn(1) == 1
+    Marker2 = Marker2';
+end
+
+% Enable 1D SafeArray for COM data conversion
+oldSafeArrayDimState = feature('COM_SafeArraySingleDim');
+feature('COM_SafeArraySingleDim', 1);
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+invoke(comobj, 'SendMarker', WaveformName, uint8(Marker1), uint8(Marker2), int32(StartIndex), int32(Size));
+
+% Disable SafeArray for COM data conversion
+feature('COM_SafeArraySingleDim', oldSafeArrayDimState);</MCode>
+               </Code>
+               <Description>Transfer only marker data.</Description>
+            </Method>
+            <Method>
+               <Name>SendPartWaveformInteger</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = SendPartWaveformInteger(obj, WaveformName, StartIndex, Size, DataBuf, DACResolution)
+
+mn = size(DataBuf);
+
+% Make sure data is in a column vector
+if mn(1) == 1
+    DataBuf = DataBuf';
+end
+
+% Enable 1D SafeArray for COM data conversion
+oldSafeArrayDimState = feature('COM_SafeArraySingleDim');
+feature('COM_SafeArraySingleDim', 1);
+
+% Pass Data to AWG
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+[val] = invoke(comobj, 'SendPartWaveformInteger', WaveformName, int32(StartIndex), int32(Size), int16(DataBuf), DACResolution);
+
+% Disable SafeArray for COM data conversion
+feature('COM_SafeArraySingleDim', oldSafeArrayDimState);</MCode>
+               </Code>
+               <Description>This function sends the integer waveform in chunks from an external controller (PC) to an instrument.</Description>
+            </Method>
+            <Method>
+               <Name>SendPartWaveformReal</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function SendPartWaveformReal(obj, WaveformName, StartIndex, Size, DataBuf)
+
+mn = size(DataBuf);
+
+% Make sure data is in a column vector
+if mn(1) == 1
+    DataBuf = DataBuf';
+end
+
+% Enable 1D SafeArray for COM data conversion
+oldSafeArrayDimState = feature('COM_SafeArraySingleDim');
+feature('COM_SafeArraySingleDim', 1);
+
+% Pass Data to AWG
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+invoke(comobj, 'SendPartWaveformReal', WaveformName, int32(StartIndex), int32(Size), single(DataBuf));
+
+% Disable SafeArray for COM data conversion
+feature('COM_SafeArraySingleDim', oldSafeArrayDimState);</MCode>
+               </Code>
+               <Description>This function sends the waveform in chunks from an external controller (PC) to an instrument.</Description>
+            </Method>
+            <Method>
+               <Name>SendWaveformInteger</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function SendWaveformInteger(obj, WaveformName, DataBuf, DACResolution)
+
+mn = size(DataBuf);
+
+% Make sure data is in a column vector
+if mn(1) == 1
+    DataBuf = DataBuf';
+end
+
+% Enable 1D SafeArray for COM data conversion
+oldSafeArrayDimState = feature('COM_SafeArraySingleDim');
+feature('COM_SafeArraySingleDim', 1);
+
+% Pass Data to AWG
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+invoke(comobj, 'SendWaveformInteger', WaveformName, int16(DataBuf), DACResolution);
+
+% Disable SafeArray for COM data conversion
+feature('COM_SafeArraySingleDim', oldSafeArrayDimState);</MCode>
+               </Code>
+               <Description>Sends an integer type waveform to instrument.</Description>
+            </Method>
+            <Method>
+               <Name>SendWaveformReal</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function SendWaveformReal(obj, WaveformName, DataBuf)
+
+mn = size(DataBuf);
+
+% Make sure data is in a column vector
+if mn(1) == 1
+    DataBuf = DataBuf';
+end
+
+% Enable 1D SafeArray for COM data conversion
+oldSafeArrayDimState = feature('COM_SafeArraySingleDim');
+feature('COM_SafeArraySingleDim', 1);
+
+% Pass Data to AWG
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+invoke(comobj, 'SendWaveformReal', WaveformName, single(DataBuf));
+
+% Disable SafeArray for COM data conversion
+feature('COM_SafeArraySingleDim', oldSafeArrayDimState);</MCode>
+               </Code>
+               <Description>Sends an real type waveform to instrument.</Description>
+            </Method>
+            <Method>
+               <Name>TimeStamp</Name>
+               <Location>arbwfm</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = TimeStamp(obj, WaveformName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'ArbWfm');
+[val] = invoke(comobj, 'TimeStamp', WaveformName);
+</MCode>
+               </Code>
+               <Description>Returns the date and time when the waveform was created as a string.</Description>
+            </Method>
+         </MethodInfo>
+      </Group>
+      <Group>
+         <Name>channel</Name>
+         <Description>Controls all channel parameters.</Description>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="Channel1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>Count</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Channel');
+	propertyValue = get(comobj, 'Count');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>Returns the number of channels available in the instrument.</Description>
+            </Property>
+            <Property>
+               <Name>CoupledState</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Channel');
+	propertyValue = get(comobj, 'CoupledState');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Channel');
+	set(comobj, 'CoupledState', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenCoupledStatePair" Value="TekFgenCoupledStatePair"/>
+                     <Enum Name="TekFgenCoupledStateAll" Value="TekFgenCoupledStateAll"/>
+                     <Enum Name="TekFgenCoupledStateNone" Value="TekFgenCoupledStateNone"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenCoupledStatePair</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Channels can be coupled so that their parameters can be changed together.</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo>
+            <Method>
+               <Name>getAddInput</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getAddInput(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'AddInput', ChannelName);
+</MCode>
+               </Code>
+               <Description>Adds input from an external signal to the output of the channel</Description>
+            </Method>
+            <Method>
+               <Name>getAmplitude</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getAmplitude(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'Amplitude', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets the analog amplitude for each channel.</Description>
+            </Method>
+            <Method>
+               <Name>getAnalogHigh</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getAnalogHigh(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'AnalogHigh', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets the analog high for each channel.</Description>
+            </Method>
+            <Method>
+               <Name>getAnalogLow</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getAnalogLow(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'AnalogLow', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets the analog low for each channel.</Description>
+            </Method>
+            <Method>
+               <Name>getDACResolution</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getDACResolution(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'DACResolution', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or returns the DAC resolution for a channel.</Description>
+            </Method>
+            <Method>
+               <Name>getDelay</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getDelay(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'Delay', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets the delay for a channel.</Description>
+            </Method>
+            <Method>
+               <Name>getDelayInputMethod</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getDelayInputMethod(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'DelayInputMethod', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets a delay input method for a channel.  Delay input method decides what values are held constant when the delay is changed.</Description>
+            </Method>
+            <Method>
+               <Name>getDigitalHigh</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getDigitalHigh(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'DigitalHigh', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets the digital high level of a channel.</Description>
+            </Method>
+            <Method>
+               <Name>getDigitalLow</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getDigitalLow(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'DigitalLow', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets the digital low level of a channel</Description>
+            </Method>
+            <Method>
+               <Name>getDigitalOffset</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getDigitalOffset(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'DigitalOffset', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets the digital offset of a channel.</Description>
+            </Method>
+            <Method>
+               <Name>getEnabled</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getEnabled(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'Enabled', ChannelName);
+</MCode>
+               </Code>
+               <Description>Switches the channel on or off and gets the channel's current state</Description>
+            </Method>
+            <Method>
+               <Name>getLowpassFilterFrequency</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getLowpassFilterFrequency(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'LowpassFilterFrequency', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets the low pass filter frequency for a channel</Description>
+            </Method>
+            <Method>
+               <Name>getMarkerHigh</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getMarkerHigh(obj, ChannelName, MarkerNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'MarkerHigh', ChannelName, int32(MarkerNumber));
+</MCode>
+               </Code>
+               <Description>Sets or gets the marker high for each marker in each channel.</Description>
+            </Method>
+            <Method>
+               <Name>getMarkerLevel</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getMarkerLevel(obj, ChannelName, MarkerNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'MarkerLevel', ChannelName, int32(MarkerNumber));
+</MCode>
+               </Code>
+               <Description>Sets or gets the marker level for each marker in each channel.</Description>
+            </Method>
+            <Method>
+               <Name>getMarkerLow</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getMarkerLow(obj, ChannelName, MarkerNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'MarkerLow', ChannelName, int32(MarkerNumber));
+</MCode>
+               </Code>
+               <Description>Sets or gets the marker low for each marker in each channel</Description>
+            </Method>
+            <Method>
+               <Name>getMarkerOffset</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getMarkerOffset(obj, ChannelName, MarkerNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'MarkerOffset', ChannelName, int32(MarkerNumber));
+</MCode>
+               </Code>
+               <Description>Sets or gets the marker offset</Description>
+            </Method>
+            <Method>
+               <Name>getName</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getName(obj, ChannelNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'Name', int32(ChannelNumber));
+</MCode>
+               </Code>
+               <Description>Returns the channel name for a given channel number.</Description>
+            </Method>
+            <Method>
+               <Name>getOffset</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getOffset(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'Offset', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets the analog offset for each channel.</Description>
+            </Method>
+            <Method>
+               <Name>getPhase</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getPhase(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'Phase', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets the waveform phase output by a channel.</Description>
+            </Method>
+            <Method>
+               <Name>getSkew</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getSkew(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'Skew', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets the skew for each source.</Description>
+            </Method>
+            <Method>
+               <Name>gettDigitalAmplitude</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = gettDigitalAmplitude(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'DigitalAmplitude', ChannelName);
+</MCode>
+               </Code>
+               <Description>Sets or gets the amplitude of the digital output of the Channel.</Description>
+            </Method>
+            <Method>
+               <Name>getWaveform</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getWaveform(obj, ChannelName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'Waveform', ChannelName);
+</MCode>
+               </Code>
+               <Description>Loads the named waveform into channel memory.</Description>
+            </Method>
+            <Method>
+               <Name>putAddInput</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putAddInput(obj, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.AddInput(ChannelName, Value);</MCode>
+               </Code>
+               <Description>Adds input from an external signal to the output of the channel</Description>
+            </Method>
+            <Method>
+               <Name>putAmplitude</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putAmplitude(obj, ChannelName, Amplitude)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.Amplitude(ChannelName, Amplitude);</MCode>
+               </Code>
+               <Description>Sets or gets the analog amplitude for each channel.</Description>
+            </Method>
+            <Method>
+               <Name>putAnalogHigh</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putAnalogHigh(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.AnalogHigh(ChannelName, Value);</MCode>
+               </Code>
+               <Description>Sets or gets the analog high for each channel.</Description>
+            </Method>
+            <Method>
+               <Name>putAnalogLow</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putAnalogLow(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.AnalogLow(ChannelName, Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the analog low for each channel.</Description>
+            </Method>
+            <Method>
+               <Name>putDACResolution</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putDACResolution(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.DACResolution(ChannelName, Value);</MCode>
+               </Code>
+               <Description>Sets or returns the DAC resolution for a channel.</Description>
+            </Method>
+            <Method>
+               <Name>putDelay</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putDelay(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.Delay(ChannelName, Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the delay for a channel.</Description>
+            </Method>
+            <Method>
+               <Name>putDelayInputMethod</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putDelayInputMethod(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.DelayInputMethod(ChannelName, Value);</MCode>
+               </Code>
+               <Description>Sets or gets a delay input method for a channel.  Delay input method decides what values are held constant when the delay is changed.</Description>
+            </Method>
+            <Method>
+               <Name>putDigitalAmplitude</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putDigitalAmplitude(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.DigitalAmplitude(ChannelName, Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the amplitude of the digital output of the Channel.</Description>
+            </Method>
+            <Method>
+               <Name>putDigitalHigh</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putDigitalHigh(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.DigitalHigh(ChannelName, Value);</MCode>
+               </Code>
+               <Description>Sets or gets the digital high level of a channel.</Description>
+            </Method>
+            <Method>
+               <Name>putDigitalLow</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putDigitalLow(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.DigitalLow(ChannelName, Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the digital low level of a channel</Description>
+            </Method>
+            <Method>
+               <Name>putDigitalOffset</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putDigitalOffset(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.DigitalOffset(ChannelName, Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the digital offset of a channel.</Description>
+            </Method>
+            <Method>
+               <Name>putEnabled</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putEnabled(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.Enabled(ChannelName, Value);</MCode>
+               </Code>
+               <Description/>
+            </Method>
+            <Method>
+               <Name>putLowpassFilterFrequency</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putLowpassFilterFrequency(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.LowpassFilterFrequency(ChannelName, Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the low pass filter frequency for a channel</Description>
+            </Method>
+            <Method>
+               <Name>putMarkerHigh</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putMarkerHigh(obj, ChannelName, MarkerNumber, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.MarkerHigh(ChannelName, int32(MarkerNumber), Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the marker high for each marker in each channel.</Description>
+            </Method>
+            <Method>
+               <Name>putMarkerLevel</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putMarkerLevel(obj, ChannelName, MarkerNumber, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.MarkerLevel(ChannelName, int32(MarkerNumber), Value);</MCode>
+               </Code>
+               <Description>Sets or gets the marker level for each marker in each channel.</Description>
+            </Method>
+            <Method>
+               <Name>putMarkerLow</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putMarkerLow(obj, ChannelName, MarkerNumber, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.MarkerLow(ChannelName, int32(MarkerNumber), Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the marker low for each marker in each channel</Description>
+            </Method>
+            <Method>
+               <Name>putMarkerOffset</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putMarkerOffset(obj, ChannelName, MarkerNumber, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.MarkerOffset(ChannelName, int32(MarkerNumber), Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the marker offset</Description>
+            </Method>
+            <Method>
+               <Name>putName</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = putName(obj, ChannelNumber, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.Name(int32(ChannelNumber), Value);
+</MCode>
+               </Code>
+               <Description>Returns the channel name for a given channel number.</Description>
+            </Method>
+            <Method>
+               <Name>putOffset</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putOffset(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+[val] = invoke(comobj, 'Offset', ChannelName);
+comobj.Offset(ChannelName, Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the analog offset for each channel.</Description>
+            </Method>
+            <Method>
+               <Name>putPhase</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putPhase(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.Phase(ChannelName, Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the waveform phase output by a channel.</Description>
+            </Method>
+            <Method>
+               <Name>putSkew</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putSkew(obj, ChannelName, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.Skew(ChannelName, Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the skew for each source.</Description>
+            </Method>
+            <Method>
+               <Name>putWaveform</Name>
+               <Location>channel</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putWaveform(obj, ChannelName, WaveformName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Channel');
+comobj.Waveform(ChannelName, WaveformName);
+</MCode>
+               </Code>
+               <Description>Loads the named waveform into channel memory.</Description>
+            </Method>
+         </MethodInfo>
+      </Group>
+      <Group>
+         <Name>control</Name>
+         <Description>Provides interface to instrument-wide properties and methods.</Description>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="Control1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>ChannelCount</Name>
+               <Location>control</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	propertyValue = get(comobj, 'ChannelCount');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>Returns the number of channels available.</Description>
+            </Property>
+            <Property>
+               <Name>ClockSource</Name>
+               <Location>control</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	propertyValue = get(comobj, 'ClockSource');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	set(comobj, 'ClockSource', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenClockSourceInternal" Value="TekFgenClockSourceInternal"/>
+                     <Enum Name="TekFgenClockSourceExternal" Value="TekFgenClockSourceExternal"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenClockSourceInternal</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets the clock source to internal or external.</Description>
+            </Property>
+            <Property>
+               <Name>InterleaveState</Name>
+               <Location>control</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	propertyValue = get(comobj, 'InterleaveState');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+if ischar(propertyValue) &amp;&amp; strcmpi(propertyValue,'on')
+	propertyValue = 1;
+end
+if strcmpi(propertyValue,'off')
+	propertyValue = 0;
+end
+
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	set(comobj, 'InterleaveState', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Boolean</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>off</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or gets the interleave state of a channel</Description>
+            </Property>
+            <Property>
+               <Name>InterleaveZeroing</Name>
+               <Location>control</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	propertyValue = get(comobj, 'InterleaveZeroing');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+if ischar(propertyValue) &amp;&amp; strcmpi(propertyValue,'on')
+	propertyValue = 1;
+end
+if strcmpi(propertyValue,'off')
+	propertyValue = 0;
+end
+
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	set(comobj, 'InterleaveZeroing', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Boolean</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>off</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or gets the Zeroing property for Interleave mode.</Description>
+            </Property>
+            <Property>
+               <Name>OperationMode</Name>
+               <Location>control</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	propertyValue = get(comobj, 'OperationMode');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	set(comobj, 'OperationMode', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenOperationModeContinuous" Value="TekFgenOperationModeContinuous"/>
+                     <Enum Name="TekFgenOperationModeSequence" Value="TekFgenOperationModeSequence"/>
+                     <Enum Name="TekFgenOperationModeGated" Value="TekFgenOperationModeGated"/>
+                     <Enum Name="TekFgenOperationModeTriggered" Value="TekFgenOperationModeTriggered"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenOperationModeContinuous</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Controls the run mode fo the instrument</Description>
+            </Property>
+            <Property>
+               <Name>OperationState</Name>
+               <Location>control</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	propertyValue = get(comobj, 'OperationState');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	set(comobj, 'OperationState', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenOperationStateOn" Value="TekFgenOperationStateOn"/>
+                     <Enum Name="TekFgenOperationStateOff" Value="TekFgenOperationStateOff"/>
+                     <Enum Name="TekFgenOperationStateWaiting" Value="TekFgenOperationStateWaiting"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenOperationStateOn</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or gets the operation state of the insturment.</Description>
+            </Property>
+            <Property>
+               <Name>ReferenceSource</Name>
+               <Location>control</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	propertyValue = get(comobj, 'ReferenceSource');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	set(comobj, 'ReferenceSource', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenReferenceSourceInternal" Value="TekFgenReferenceSourceInternal"/>
+                     <Enum Name="TekFgenReferenceSourceExternal" Value="TekFgenReferenceSourceExternal"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenReferenceSourceInternal</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or returns the reference source.</Description>
+            </Property>
+            <Property>
+               <Name>RepetitionRate</Name>
+               <Location>control</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	propertyValue = get(comobj, 'RepetitionRate');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	set(comobj, 'RepetitionRate', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or gets the repetition rate. This is common to all channels.</Description>
+            </Property>
+            <Property>
+               <Name>SamplingRate</Name>
+               <Location>control</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	propertyValue = get(comobj, 'SamplingRate');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	set(comobj, 'SamplingRate', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or gets the sampling frequency of the instrument.</Description>
+            </Property>
+            <Property>
+               <Name>SetupFileName</Name>
+               <Location>control</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	propertyValue = get(comobj, 'SetupFileName');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>Sets the name for the setup file for AWG.  When saving the setup file, this name is used.</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo>
+            <Method>
+               <Name>RestoreFromSetup</Name>
+               <Location>control</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function RestoreFromSetup(obj, FileName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Control');
+invoke(comobj, 'RestoreFromSetup', FileName);
+</MCode>
+               </Code>
+               <Description>Restores the instrument settings from a specified file.</Description>
+            </Method>
+            <Method>
+               <Name>SaveSetup</Name>
+               <Location>control</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function SaveSetup(obj, FileName)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Control');
+invoke(comobj, 'SaveSetup', FileName);
+</MCode>
+               </Code>
+               <Description>Saves the current setup as .AWG file.</Description>
+            </Method>
+         </MethodInfo>
+      </Group>
+      <Group>
+         <Name>controldc</Name>
+         <Description>Sets or gets the properties for DC output state and levels</Description>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="ControlDC1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>State</Name>
+               <Location>controldc</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	comobj = get(comobj, 'DC');
+	propertyValue = get(comobj, 'State');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+if ischar(propertyValue) &amp;&amp; strcmpi(propertyValue,'on')
+	propertyValue = 1;
+end
+if strcmpi(propertyValue,'off')
+	propertyValue = 0;
+end
+
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	comobj = get(comobj, 'DC');
+	set(comobj, 'State', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Boolean</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>off</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets the ON/OFF of the DC output state.</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo>
+            <Method>
+               <Name>getLevel</Name>
+               <Location>controldc</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [val] = getLevel(obj, ChannelNumber)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Control');
+comobj = get(comobj, 'DC');
+[val] = invoke(comobj, 'Level', ChannelNumber);
+</MCode>
+               </Code>
+               <Description>Sets or gets the DC level for a DC channel</Description>
+            </Method>
+            <Method>
+               <Name>putLevel</Name>
+               <Location>controldc</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function putLevel(obj, ChannelNumber, Value)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Control');
+comobj = get(comobj, 'DC');
+[val] = invoke(comobj, 'Level', ChannelNumber, Value);
+</MCode>
+               </Code>
+               <Description>Sets or gets the DC level for a DC channel</Description>
+            </Method>
+         </MethodInfo>
+      </Group>
+      <Group>
+         <Name>controlexternalclocksource</Name>
+         <Description/>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="ControlExternalClockSource1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>DividerRate</Name>
+               <Location>controlexternalclocksource</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	comobj = get(comobj, 'ExternalClockSource');
+	propertyValue = get(comobj, 'DividerRate');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	comobj = get(comobj, 'ExternalClockSource');
+	set(comobj, 'DividerRate', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets the divider rate for an external clock</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo/>
+      </Group>
+      <Group>
+         <Name>controlexternalreferencesource</Name>
+         <Description>Interface to access the external reference properities.</Description>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="ControlExternalReferenceSource1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>ControlExternalReferenceSourceType</Name>
+               <Location>controlexternalreferencesource</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	comobj = get(comobj, 'ExternalReferenceSource');
+	propertyValue = get(comobj, 'Type');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	comobj = get(comobj, 'ExternalReferenceSource');
+	set(comobj, 'Type', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenRefTypeFixed" Value="TekFgenRefTypeFixed"/>
+                     <Enum Name="TekFgenRefTypeVariable" Value="TekFgenRefTypeVariable"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenRefTypeFixed</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or gets the external reference type</Description>
+            </Property>
+            <Property>
+               <Name>ExternalRefVariableMultRate</Name>
+               <Location>controlexternalreferencesource</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	comobj = get(comobj, 'ExternalReferenceSource');
+	propertyValue = get(comobj, 'ExternalRefVariableMultRate');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	comobj = get(comobj, 'ExternalReferenceSource');
+	set(comobj, 'ExternalRefVariableMultRate', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets the multiplier rate of the external reference.</Description>
+            </Property>
+            <Property>
+               <Name>Frequency</Name>
+               <Location>controlexternalreferencesource</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	comobj = get(comobj, 'ExternalReferenceSource');
+	propertyValue = get(comobj, 'Frequency');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Control');
+	comobj = get(comobj, 'ExternalReferenceSource');
+	set(comobj, 'Frequency', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenRefFrequency10MHz" Value="TekFgenRefFrequency10MHz"/>
+                     <Enum Name="TekFgenRefFrequency20MHz" Value="TekFgenRefFrequency20MHz"/>
+                     <Enum Name="TekFgenRefFrequency100MHz" Value="TekFgenRefFrequency100MHz"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenRefFrequency10MHz</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or gets the external reference frequency.  This is valid only when the external reference type is fixed.</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo/>
+      </Group>
+      <Group>
+         <Name>display</Name>
+         <Description>Controls the UI display state.</Description>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="Display1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>SequenceWindowState</Name>
+               <Location>display</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Display');
+	propertyValue = get(comobj, 'SequenceWindowState');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Display');
+	set(comobj, 'SequenceWindowState', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenDisplayStateMinimize" Value="TekFgenDisplayStateMinimize"/>
+                     <Enum Name="TekFgenDisplayStateRestore" Value="TekFgenDisplayStateRestore"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenDisplayStateMinimize</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or gets the window state of the overview window.</Description>
+            </Property>
+            <Property>
+               <Name>WaveformWindowState</Name>
+               <Location>display</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Display');
+	propertyValue = get(comobj, 'WaveformWindowState');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Display');
+	set(comobj, 'WaveformWindowState', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenDisplayStateMinimize" Value="TekFgenDisplayStateMinimize"/>
+                     <Enum Name="TekFgenDisplayStateRestore" Value="TekFgenDisplayStateRestore"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenDisplayStateMinimize</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or gets the state of the waveform window.</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo/>
+      </Group>
+      <Group>
+         <Name>driveroperation</Name>
+         <Description>IVI Driver operation interface</Description>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="DriverOperation1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>Cache</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	propertyValue = get(comobj, 'Cache');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+if ischar(propertyValue) &amp;&amp; strcmpi(propertyValue,'on')
+	propertyValue = 1;
+end
+if strcmpi(propertyValue,'off')
+	propertyValue = 0;
+end
+
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	set(comobj, 'Cache', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Boolean</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>off</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>If True, the driver caches instrument settings to avoid unnecessary I/O to the instrument.  The actual settings that are cached are driver-specific.</Description>
+            </Property>
+            <Property>
+               <Name>DriverSetup</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	propertyValue = get(comobj, 'DriverSetup');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>The driver setup string.  It is either specified in the Configuration Store or passed in the OptionString parameter of the Initialize function.  Driver setup is empty if the driver is not initialized.</Description>
+            </Property>
+            <Property>
+               <Name>InterchangeCheck</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	propertyValue = get(comobj, 'InterchangeCheck');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+if ischar(propertyValue) &amp;&amp; strcmpi(propertyValue,'on')
+	propertyValue = 1;
+end
+if strcmpi(propertyValue,'off')
+	propertyValue = 0;
+end
+
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	set(comobj, 'InterchangeCheck', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Boolean</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>off</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>If True, the driver maintains a record of interchangeability warnings.  If the driver does not support interchangeability checking, attempts to set InterchangeCheck to True return an error.</Description>
+            </Property>
+            <Property>
+               <Name>IoResourceDescriptor</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	propertyValue = get(comobj, 'IoResourceDescriptor');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>The resource descriptor specifies the connection to a physical device.  It is either specified in the Configuration Store or passed in the ResourceName parameter of the Initialize function.  It is empty if the driver is not initialized.</Description>
+            </Property>
+            <Property>
+               <Name>LogicalName</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	propertyValue = get(comobj, 'LogicalName');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>Logical Name identifies a driver session in the Configuration Store.  If Logical Name is not empty, the driver was initialized from information in the driver session.  If it is empty, the driver was initialized without using the Configuration Store.</Description>
+            </Property>
+            <Property>
+               <Name>QueryInstrumentStatus</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	propertyValue = get(comobj, 'QueryInstrumentStatus');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+if ischar(propertyValue) &amp;&amp; strcmpi(propertyValue,'on')
+	propertyValue = 1;
+end
+if strcmpi(propertyValue,'off')
+	propertyValue = 0;
+end
+
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	set(comobj, 'QueryInstrumentStatus', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Boolean</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>off</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>If True, the driver queries the instrument status at the end of each method or property that performs I/O to the instrument.  If an error is reported, use ErrorQuery to retrieve error messages one at a time from the instrument.</Description>
+            </Property>
+            <Property>
+               <Name>RangeCheck</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	propertyValue = get(comobj, 'RangeCheck');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+if ischar(propertyValue) &amp;&amp; strcmpi(propertyValue,'on')
+	propertyValue = 1;
+end
+if strcmpi(propertyValue,'off')
+	propertyValue = 0;
+end
+
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	set(comobj, 'RangeCheck', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Boolean</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>off</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>If True, the driver validates property and parameter values to avoid invalid commands to the instrument.  The extent of the validation is driver-specific.</Description>
+            </Property>
+            <Property>
+               <Name>RecordCoercions</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	propertyValue = get(comobj, 'RecordCoercions');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+if ischar(propertyValue) &amp;&amp; strcmpi(propertyValue,'on')
+	propertyValue = 1;
+end
+if strcmpi(propertyValue,'off')
+	propertyValue = 0;
+end
+
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	set(comobj, 'RecordCoercions', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Boolean</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>off</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>If True, the driver keeps a list of the value coercions it makes for ViInt32 and ViReal64 attributes.  If the driver does not support coercion recording, attempts to set RecordCoercions to True will return an error.</Description>
+            </Property>
+            <Property>
+               <Name>Simulate</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	propertyValue = get(comobj, 'Simulate');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+if ischar(propertyValue) &amp;&amp; strcmpi(propertyValue,'on')
+	propertyValue = 1;
+end
+if strcmpi(propertyValue,'off')
+	propertyValue = 0;
+end
+
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'DriverOperation');
+	set(comobj, 'Simulate', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Boolean</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>off</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>If True, the driver does not perform I/O to the instrument, and returns simulated values for output parameters.</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo>
+            <Method>
+               <Name>ClearInterchangeWarnings</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function ClearInterchangeWarnings(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'DriverOperation');
+invoke(comobj, 'ClearInterchangeWarnings');
+</MCode>
+               </Code>
+               <Description>Clears the list of interchangeability warnings that the IVI specific driver maintains.</Description>
+            </Method>
+            <Method>
+               <Name>GetNextCoercionRecord</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [CoercionRecord] = GetNextCoercionRecord(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'DriverOperation');
+[CoercionRecord] = invoke(comobj, 'GetNextCoercionRecord');
+</MCode>
+               </Code>
+               <Description>Returns the oldest record from the coercion record list.  Records are only added to the list if RecordCoercions is True.</Description>
+            </Method>
+            <Method>
+               <Name>GetNextInterchangeWarning</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [InterchangeWarning] = GetNextInterchangeWarning(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'DriverOperation');
+[InterchangeWarning] = invoke(comobj, 'GetNextInterchangeWarning');
+</MCode>
+               </Code>
+               <Description>Returns the oldest warning from the interchange warning list.  Records are only added to the list if InterchangeCheck is True.</Description>
+            </Method>
+            <Method>
+               <Name>InvalidateAllAttributes</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function InvalidateAllAttributes(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'DriverOperation');
+invoke(comobj, 'InvalidateAllAttributes');
+</MCode>
+               </Code>
+               <Description>Invalidates all of the driver's cached values.</Description>
+            </Method>
+            <Method>
+               <Name>ResetInterchangeCheck</Name>
+               <Location>driveroperation</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function ResetInterchangeCheck(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'DriverOperation');
+invoke(comobj, 'ResetInterchangeCheck');
+</MCode>
+               </Code>
+               <Description>Resets the interchangeability checking algorithms of the driver so that methods and properties that executed prior to calling this function have no affect on whether future calls to the driver generate interchangeability warnings.</Description>
+            </Method>
+         </MethodInfo>
+      </Group>
+      <Group>
+         <Name>event</Name>
+         <Description>Provides interface to control the parameters associated with external event input</Description>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="Event1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>Impedance</Name>
+               <Location>event</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Event');
+	propertyValue = get(comobj, 'Impedance');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Event');
+	set(comobj, 'Impedance', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenEventImpedance5OOhms" Value="TekFgenEventImpedance5OOhms"/>
+                     <Enum Name="TekFgenEventImpedance1KOhms" Value="TekFgenEventImpedance1KOhms"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenEventImpedance5OOhms</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Gets or sets the impedance for the external event input.</Description>
+            </Property>
+            <Property>
+               <Name>Jumptiming</Name>
+               <Location>event</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Event');
+	propertyValue = get(comobj, 'Jumptiming');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Event');
+	set(comobj, 'Jumptiming', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenJumpTimingSynchronous" Value="TekFgenJumpTimingSynchronous"/>
+                     <Enum Name="TekFgenJumpTimingAsynchronous" Value="TekFgenJumpTimingAsynchronous"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenJumpTimingSynchronous</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>This sets the jump timing</Description>
+            </Property>
+            <Property>
+               <Name>Level</Name>
+               <Location>event</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Event');
+	propertyValue = get(comobj, 'Level');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Event');
+	set(comobj, 'Level', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or gets the level of external event signal</Description>
+            </Property>
+            <Property>
+               <Name>Polarity</Name>
+               <Location>event</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Event');
+	propertyValue = get(comobj, 'Polarity');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Event');
+	set(comobj, 'Polarity', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenPolarityPositive" Value="TekFgenPolarityPositive"/>
+                     <Enum Name="TekFgenPolarityNegative" Value="TekFgenPolarityNegative"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenPolarityPositive</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or gets the event signal's polarity.</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo>
+            <Method>
+               <Name>GenerateEvent</Name>
+               <Location>event</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function GenerateEvent(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Event');
+invoke(comobj, 'GenerateEvent');
+</MCode>
+               </Code>
+               <Description>Generates a software event. Ths is equivalent to pressing the 'ForceEvent' button on the instrument front panel.</Description>
+            </Method>
+         </MethodInfo>
+      </Group>
+      <Group>
+         <Name>identity</Name>
+         <Description>IVI Driver driver identity interface</Description>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="Identity1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>Description</Name>
+               <Location>identity</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Identity');
+	propertyValue = get(comobj, 'Description');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>A brief description of the implementing component.  Description is limted to 256 bytes.</Description>
+            </Property>
+            <Property>
+               <Name>GroupCapabilities</Name>
+               <Location>identity</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Identity');
+	propertyValue = get(comobj, 'GroupCapabilities');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>A comma-separated list of the class capability groups implemented by the driver.  Capability group names are documented in the IVI class specifications.  If the driver is not class compliant, the driver returns an empty string.</Description>
+            </Property>
+            <Property>
+               <Name>Identifier</Name>
+               <Location>identity</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Identity');
+	propertyValue = get(comobj, 'Identifier');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>The case-sensitive unique identifier of the implementing IVI-COM instrument driver.</Description>
+            </Property>
+            <Property>
+               <Name>InstrumentFirmwareRevision</Name>
+               <Location>identity</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Identity');
+	propertyValue = get(comobj, 'InstrumentFirmwareRevision');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>The firmware revision reported by the physical instrument.  If Simulation is enabled or the instrument is not capable of reporting the firmware revision, a string is returned that explains the condition.</Description>
+            </Property>
+            <Property>
+               <Name>InstrumentManufacturer</Name>
+               <Location>identity</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Identity');
+	propertyValue = get(comobj, 'InstrumentManufacturer');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>The name of the manufacturer reported by the physical instrument.  If Simulation is enabled or the instrument is not capable of reporting the name of the manufacturer, a string is returned that explains the condition. Manufacturer is limited to 256 bytes</Description>
+            </Property>
+            <Property>
+               <Name>InstrumentModel</Name>
+               <Location>identity</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Identity');
+	propertyValue = get(comobj, 'InstrumentModel');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>The model number or name reported by the physical instrument.  If Simulation is enabled or the instrument is not capable of reporting the model number or name, a string is returned that explains the condition.  Model is limited to 256 bytes</Description>
+            </Property>
+            <Property>
+               <Name>Revision</Name>
+               <Location>identity</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Identity');
+	propertyValue = get(comobj, 'Revision');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>The revision of the implementing component.  Refer to IVI-3.2, Section 3.1.2.2, for a description of revision syntax and semantics.  Revision is limited to 256 bytes.</Description>
+            </Property>
+            <Property>
+               <Name>SpecificationMajorVersion</Name>
+               <Location>identity</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Identity');
+	propertyValue = get(comobj, 'SpecificationMajorVersion');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>For IVI class-compliant drivers, the major version number of the instrument class specification.  If the driver is not class compliant, the driver returns zero.</Description>
+            </Property>
+            <Property>
+               <Name>SpecificationMinorVersion</Name>
+               <Location>identity</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Identity');
+	propertyValue = get(comobj, 'SpecificationMinorVersion');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>always</ReadOnly>
+               <Description>For IVI class-compliant drivers, the minor version number of the instrument class specification.  If the driver is not class compliant, the driver returns zero.</Description>
+            </Property>
+            <Property>
+               <Name>SupportedInstrumentModels</Name>
+               <Location>identity</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Identity');
+	propertyValue = get(comobj, 'SupportedInstrumentModels');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>A comma-separated list of instrument models that the IVI specific driver can control.</Description>
+            </Property>
+            <Property>
+               <Name>Vendor</Name>
+               <Location>identity</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Identity');
+	propertyValue = get(comobj, 'Vendor');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+%	NOTE: This property is defined as read only.</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue/>
+               <ReadOnly>always</ReadOnly>
+               <Description>The name of the vendor that supplies the implementing component.  Vendor is limited to 256 bytes.</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo/>
+      </Group>
+      <Group>
+         <Name>import</Name>
+         <Description/>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="Import1" Index="1"/>
+         </Mappings>
+         <PropertyInfo/>
+         <MethodInfo>
+            <Method>
+               <Name>Configure</Name>
+               <Location>import</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function Configure(obj, Normalize, ZeroReference, SetFrequency, Setlevel, ChannelNo)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Import');
+invoke(comobj, 'Configure', Normalize, ZeroReference, SetFrequency, Setlevel, int32(ChannelNo));
+</MCode>
+               </Code>
+               <Description>Configures the parameters that are affected by import.</Description>
+            </Method>
+            <Method>
+               <Name>ImportWaveform</Name>
+               <Location>import</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function ImportWaveform(obj, WaveformName, ImportFileName, Format)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Import');
+invoke(comobj, 'ImportWaveform', WaveformName, ImportFileName, Format);
+</MCode>
+               </Code>
+               <Description>Import waveform from the file specified by the path.</Description>
+            </Method>
+            <Method>
+               <Name>ImportWaveform2</Name>
+               <Location>import</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function ImportWaveform2(obj, WaveformName, ImportFileName, Format, Normalize, ZeroReference, SetFrequency, Setlevel, ChannelNo)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Import');
+invoke(comobj, 'ImportWaveform2', WaveformName, ImportFileName, Format, Normalize, ZeroReference, SetFrequency, Setlevel, int32(ChannelNo));
+</MCode>
+               </Code>
+               <Description>Changes import parameters and imports a waveform from an external file.</Description>
+            </Method>
+         </MethodInfo>
+      </Group>
+      <Group>
+         <Name>trigger</Name>
+         <Description>Interface to set/get instrument triggering paramters</Description>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="Trigger1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>Impedance</Name>
+               <Location>trigger</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	propertyValue = get(comobj, 'Impedance');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	set(comobj, 'Impedance', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenTriggerImpedance5OOhms" Value="TekFgenTriggerImpedance5OOhms"/>
+                     <Enum Name="TekFgenTriggerImpedance1KOhms" Value="TekFgenTriggerImpedance1KOhms"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenTriggerImpedance5OOhms</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or returns the external trigger impedance.</Description>
+            </Property>
+            <Property>
+               <Name>InternalRate</Name>
+               <Location>trigger</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	propertyValue = get(comobj, 'InternalRate');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	set(comobj, 'InternalRate', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or returns the rate of the intenal trigger.</Description>
+            </Property>
+            <Property>
+               <Name>Level</Name>
+               <Location>trigger</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	propertyValue = get(comobj, 'Level');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	set(comobj, 'Level', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or returns the external trigger threshold.</Description>
+            </Property>
+            <Property>
+               <Name>Polarity</Name>
+               <Location>trigger</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	propertyValue = get(comobj, 'Polarity');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	set(comobj, 'Polarity', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenPolarityPositive" Value="TekFgenPolarityPositive"/>
+                     <Enum Name="TekFgenPolarityNegative" Value="TekFgenPolarityNegative"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenPolarityPositive</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or returns the trigger polarity. It is used to set polarity when the ITekFgenControl.OperationMode is Gated.</Description>
+            </Property>
+            <Property>
+               <Name>Slope</Name>
+               <Location>trigger</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	propertyValue = get(comobj, 'Slope');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	set(comobj, 'Slope', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenTriggerSlopePositive" Value="TekFgenTriggerSlopePositive"/>
+                     <Enum Name="TekFgenTriggerSlopeNegative" Value="TekFgenTriggerSlopeNegative"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenTriggerSlopePositive</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or returns the external trigger slope. It is used to set slope when the ITekFgenControl.OperationMode is not Gated.</Description>
+            </Property>
+            <Property>
+               <Name>Source</Name>
+               <Location>trigger</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	propertyValue = get(comobj, 'Source');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	set(comobj, 'Source', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenTriggerSourceInternal" Value="TekFgenTriggerSourceInternal"/>
+                     <Enum Name="TekFgenTriggerSourceExternal" Value="TekFgenTriggerSourceExternal"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenTriggerSourceInternal</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets or returns the trigger source.</Description>
+            </Property>
+            <Property>
+               <Name>WaitValue</Name>
+               <Location>trigger</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <GetMCode>function propertyValue = getProperty(obj, propertyName)
+% Return a property value.
+%   This function is called to return the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	propertyValue = get(comobj, 'WaitValue');
+catch
+	propertyValue = [];
+end
+</GetMCode>
+                  <SetMCode>function set(obj, propertyName, propertyValue)
+% Set a property value.
+%   This function is called to set the device or group object property
+%   value. If the property is a group property, OBJ is the group object. If
+%   the property is a base device property, OBJ is the device object.
+try
+	comobj = get(obj, 'Parent');
+	comobj = get(comobj, 'Interface');
+	comobj = get(comobj, 'Trigger');
+	set(comobj, 'WaitValue', propertyValue);
+catch
+	rethrow(lasterror);
+end</SetMCode>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="TekFgenWaitValueFirst" Value="TekFgenWaitValueFirst"/>
+                     <Enum Name="TekFgenWaitValueLast" Value="TekFgenWaitValueLast"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>TekFgenWaitValueFirst</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>Sets the wait value for the trigger input</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo>
+            <Method>
+               <Name>AbortGeneration</Name>
+               <Location>trigger</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function AbortGeneration(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Trigger');
+invoke(comobj, 'AbortGeneration');
+</MCode>
+               </Code>
+               <Description>This method aborts waveform generation when the instrument is in gated mode.</Description>
+            </Method>
+            <Method>
+               <Name>SendSoftwareTrigger</Name>
+               <Location>trigger</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function SendSoftwareTrigger(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Trigger');
+invoke(comobj, 'SendSoftwareTrigger');
+</MCode>
+               </Code>
+               <Description>Generates a soft trigger. This is similar to pressing the Trigger button on the instrument's front panel.</Description>
+            </Method>
+         </MethodInfo>
+      </Group>
+      <Group>
+         <Name>utility</Name>
+         <Description>IVI Driver utility interface</Description>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="Utility1" Index="1"/>
+         </Mappings>
+         <PropertyInfo/>
+         <MethodInfo>
+            <Method>
+               <Name>Disable</Name>
+               <Location>utility</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function Disable(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Utility');
+invoke(comobj, 'Disable');
+</MCode>
+               </Code>
+               <Description>Quickly places the instrument in a state where it has no, or minimal, effect on the external system to which it is connected.  This state is not necessarily a known state.</Description>
+            </Method>
+            <Method>
+               <Name>ErrorQuery</Name>
+               <Location>utility</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [ErrorCode, ErrorMessage] = ErrorQuery(obj, varargin)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Utility');
+[ErrorCode, ErrorMessage] = invoke(comobj, 'ErrorQuery', 0, '');
+</MCode>
+               </Code>
+               <Description>Queries the instrument and returns instrument specific error information.  This function can be used when QueryInstrumentStatus is True to retrieve error details when the driver detects an instrument error.</Description>
+            </Method>
+            <Method>
+               <Name>LockObject</Name>
+               <Location>utility</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function LockObject(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Utility');
+invoke(comobj, 'LockObject');
+</MCode>
+               </Code>
+               <Description>Obtains a multithread lock on the driver after waiting until all other execution threads have released their locks on the instrument session.</Description>
+            </Method>
+            <Method>
+               <Name>Reset</Name>
+               <Location>utility</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function Reset(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Utility');
+invoke(comobj, 'Reset');
+</MCode>
+               </Code>
+               <Description>Places the instrument in a known state and configures instrument options on which the IVI specific driver depends (for example, enabling/disabling headers).  For an IEEE 488.2 instrument, Reset sends the command string *RST to the instrument.</Description>
+            </Method>
+            <Method>
+               <Name>ResetWithDefaults</Name>
+               <Location>utility</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function ResetWithDefaults(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Utility');
+invoke(comobj, 'ResetWithDefaults');
+</MCode>
+               </Code>
+               <Description>Does the equivalent of Reset and then, (1) disables class extension capability groups, (2) sets attributes to initial values defined by class specs, and (3) configures the driver to option string settings used when Initialize was last executed.</Description>
+            </Method>
+            <Method>
+               <Name>SelfTest</Name>
+               <Location>utility</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function [TestResult, TestMessage] = SelfTest(obj, varargin)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Utility');
+[TestResult, TestMessage] = invoke(comobj, 'SelfTest', 0, '');
+</MCode>
+               </Code>
+               <Description>Performs an instrument self test, waits for the instrument to complete the test, and queries the instrument for the results.  If the instrument passes the test, TestResult is zero and TestMessage is 'Self test passed'.</Description>
+            </Method>
+            <Method>
+               <Name>UnlockObject</Name>
+               <Location>utility</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>MCode</Type>
+               <Code>
+                  <MCode>function UnlockObject(obj)
+
+comobj = get(obj, 'Parent');
+comobj = get(comobj, 'Interface');
+comobj = get(comobj, 'Utility');
+invoke(comobj, 'UnlockObject');
+</MCode>
+               </Code>
+               <Description>Releases a previously obtained mutlithread lock.</Description>
+            </Method>
+         </MethodInfo>
+      </Group>
+   </GroupInfo>
+</MATLABInstrumentDriver>
