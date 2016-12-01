@@ -1,3 +1,6 @@
+Blue screen KERNEL_STACK_INPAGE_ERROR messages were determined to result from imminent hard drive failure.  Replacing the HDD has solved the problem.
+
+
 20160301
 KERNEL_STACK_INPAGE_ERROR
 technical information stop: 0x00000077 (0xC000000E,0xC000000E,0x00000000,0x0BE7E000)
